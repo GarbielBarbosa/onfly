@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:onfly/shared/dialogs/alert_dialog.dart';
 import 'package:onfly/shared/dialogs/loading.dart';
 
@@ -76,6 +75,12 @@ class LoginController {
           closeButton: 'ok',
           title: 'Erro',
           message: 'Senha errada fornecida para esse usuário.',
+        );
+      } else if (e.code == 'network-request-failed') {
+        alert.showAlert(
+          closeButton: 'OK',
+          title: 'Sem conexão',
+          message: 'Você está sem conexão e não está logado. Por favor, faça login assim que possível.',
         );
       } else {
         alert.showAlert(

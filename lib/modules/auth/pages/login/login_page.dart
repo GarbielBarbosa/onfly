@@ -38,19 +38,20 @@ class _LoginState extends State<Login> {
                         },
                       ),
                       TextFormField(
-                          key: const Key('senha'),
-                          controller: controller.passwordController,
-                          focusNode: controller.passwordFocus,
-                          textInputAction: TextInputAction.done,
-                          decoration: const InputDecoration(
-                            hintText: 'senha',
-                          ),
-                          validator: (e) {
-                            return Validators().validatePassword(e ?? '');
-                          },
-                          onEditingComplete: () {
-                            controller.validateForm(() => controller.registerUser());
-                          }),
+                        key: const Key('senha'),
+                        controller: controller.passwordController,
+                        focusNode: controller.passwordFocus,
+                        textInputAction: TextInputAction.done,
+                        decoration: const InputDecoration(
+                          hintText: 'senha',
+                        ),
+                        validator: (e) {
+                          return Validators().validatePassword(e ?? '');
+                        },
+                        onEditingComplete: () {
+                          controller.validateForm(() => controller.registerUser());
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -59,7 +60,6 @@ class _LoginState extends State<Login> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.validateForm(() => controller.login());
-                      //context.go('/details')
                     },
                     child: const Text('Entrar'),
                   ),
