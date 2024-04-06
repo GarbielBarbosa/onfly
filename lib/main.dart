@@ -38,8 +38,13 @@ class MyApp extends StatelessWidget {
               ).copyWith(
                 primary: DefaultColors().primary,
               ),
+              dialogBackgroundColor: DefaultColors().background,
               appBarTheme: AppBarTheme(
                 titleTextStyle: TextStyle(color: DefaultColors().primary, fontWeight: FontWeight.w600, fontSize: 20),
+              ),
+              dialogTheme: DialogTheme(
+                backgroundColor: DefaultColors().background,
+                surfaceTintColor: DefaultColors().background,
               ),
             ),
           );

@@ -15,9 +15,9 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
 
   static const List<MyCustomBottomNavBarItem> tabs = [
     MyCustomBottomNavBarItem(
-      icon: Icon(Icons.home),
-      activeIcon: Icon(Icons.home),
-      label: 'HOME',
+      icon: Icon(Icons.monetization_on),
+      activeIcon: Icon(Icons.monetization_on),
+      label: 'Despesas',
       initialLocation: '/HomePage',
     ),
     MyCustomBottomNavBarItem(
@@ -32,12 +32,6 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
       label: 'SHOP',
       initialLocation: '/shop',
     ),
-    MyCustomBottomNavBarItem(
-      icon: Icon(Icons.account_circle_outlined),
-      activeIcon: Icon(Icons.account_circle),
-      label: 'MY',
-      initialLocation: '/login',
-    ),
   ];
 
   @override
@@ -48,15 +42,13 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
       bottomNavigationBar: BottomNavigationBar(
         selectedLabelStyle: labelStyle,
         unselectedLabelStyle: labelStyle,
-        selectedItemColor: const Color(0xFF434343),
         selectedFontSize: 12,
-        unselectedItemColor: const Color(0xFF838383),
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         onTap: (int index) {
           _goOtherTab(context, index);
         },
-        currentIndex: 0,
+        currentIndex: _currentIndex,
         items: tabs,
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomFormField extends StatelessWidget {
   const CustomFormField({
@@ -14,6 +15,9 @@ class CustomFormField extends StatelessWidget {
     this.obscureText = false,
     this.prefixIcon,
     this.suffixIcon,
+    this.inputFormatters,
+    this.decoration,
+    this.onTap,
   });
 
   final TextEditingController? controller;
@@ -27,6 +31,9 @@ class CustomFormField extends StatelessWidget {
   final String? label;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final List<TextInputFormatter>? inputFormatters;
+  final InputDecoration? decoration;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -60,7 +67,9 @@ class CustomFormField extends StatelessWidget {
           keyboardType: keyboardType,
           validator: validator,
           onEditingComplete: onEditingComplete,
-        ),
+          inputFormatters: inputFormatters,
+          onTap: onTap,
+        )
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onfly/modules/home/pages/home/home_controller.dart';
+import 'package:onfly/modules/home/pages/home/widgets/expense_card.dart';
 import 'package:onfly/shared/enuns.dart';
 import 'package:onfly/shared/utils/currency.dart';
 import 'package:onfly/shared/widgets/custom_app_bar.dart';
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const CustomDrawer(),
-      appBar: CustomAppBar(title: 'Despesas'),
+      appBar: const CustomAppBar(title: 'Despesas'),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           controller.showDialogExpenses(null);
@@ -50,40 +51,11 @@ class _HomePageState extends State<HomePage> {
                   itemCount: controller.listExpenses.length,
                   itemBuilder: (context, index) {
                     final expense = controller.listExpenses[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              Text(expense.category),
-                              Text(expense.description),
-                            ],
-                          ),
-                          Text(
-                            Currency().formatMoney(value: expense.value, currency: expense.currency),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              controller.showDialogExpenses(expense);
-                            },
-                            child: const Icon(
-                              Icons.edit,
-                              size: 20,
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              controller.deleteExpense(expense.id ?? '');
-                            },
-                            child: const Icon(
-                              Icons.delete_outline,
-                              size: 20,
-                            ),
-                          )
-                        ],
-                      ),
+                    return ExpenseCard(
+                      expense: expense,
+                      onEdit: () {
+                        controller.showDialogExpenses(expense);
+                      },
                     );
                   },
                 );

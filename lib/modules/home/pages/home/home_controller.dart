@@ -26,11 +26,13 @@ class HomeController {
 
   showDialogExpenses(Expense? e) async {
     try {
-      final expense = await expensesDialog.showExpensesDialog(e);
-      if (expense != null && expense.id == null) {
-        addExpenses(expense);
-      } else if (expense != null && expense.id != null) {
-        updateExpenses(expense);
+      final r = await expensesDialog.showExpensesDialog(e);
+      if (r?.expense != null && r?.type == 'create') {
+        addExpenses(r!.expense!);
+      } else if (r?.expense != null && r?.type == 'update') {
+        updateExpenses(r!.expense!);
+      } else if (r?.expense != null && r?.type == 'delete') {
+        deleteExpense(r!.expense!.id ?? '');
       }
     } catch (e) {}
   }
