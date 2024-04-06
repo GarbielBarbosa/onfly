@@ -19,6 +19,7 @@ class ReportsController {
         expensesDialog = ExpensesDialog(context: context);
 
   List<Expense> listExpenses = [];
+  List<Expense> filteredExpenses = [];
 
   List<ExpenseByDay> listExpenseByDay = [];
   List<ExpenseByCategory> expenseByCategory = [];
@@ -29,8 +30,12 @@ class ReportsController {
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 7));
 
-  TextEditingController startDateController =
-      TextEditingController(text: '${DateFormat('dd/MM/yyyy', 'pt_BR').format(DateTime.now())} - ${DateFormat('dd/MM/yyyy', 'pt_BR').format(DateTime.now().add(const Duration(days: 7)))}');
+  TextEditingController startDateController = TextEditingController(
+      text: '${DateFormat('dd/MM/yyyy', 'pt_BR').format(DateTime.now())} - ${DateFormat('dd/MM/yyyy', 'pt_BR').format(
+    DateTime.now().add(
+      const Duration(days: 7),
+    ),
+  )}');
 
   final formKeyPie = GlobalKey<FormState>();
 
@@ -39,6 +44,15 @@ class ReportsController {
 
   TextEditingController dateControllerPie = TextEditingController(text: DateFormat('dd/MM/yyyy', 'pt_BR').format(DateTime.now()));
   TextEditingController endDateControllerPie = TextEditingController(text: DateFormat('dd/MM/yyyy', 'pt_BR').format(DateTime.now().add(const Duration(days: 1))));
+
+  final formKeyTable = GlobalKey<FormState>();
+  DateTime startDateTable = DateTime.now();
+  DateTime endDateTable = DateTime.now().add(const Duration(days: 30));
+
+  TextEditingController dateControllerTable = TextEditingController(text: DateFormat('dd/MM/yyyy', 'pt_BR').format(DateTime.now()));
+  TextEditingController endDateControllerTable = TextEditingController(text: DateFormat('dd/MM/yyyy', 'pt_BR').format(DateTime.now().add(const Duration(days: 1))));
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   void listenToExpensesStream() {
     ExpenseService.getAllExpensesStream().listen((List<Expense> expenses) {
@@ -51,7 +65,7 @@ class ReportsController {
 
       expenseByCategory.sort(compareExpenseValues);
       listExpenseByDay = sumExpensesByDay(expenses, startDate, endDate);
-
+      filteredExpenses = filterExpenses();
       state.value = ViewState.success;
     }, onError: (error) {
       state.value = ViewState.error;
@@ -77,6 +91,36 @@ class ReportsController {
 
     return sumExpenses;
   }
+
+  List<ExpenseByCategory> sumExpensesByCategory(List<Expense> expenses, DateTime startDate, DateTime endDate) {
+    Map<String, double> categoryMap = {};
+    double totalValue = 0;
+
+    // Calculating total value for each category
+    for (var expense in expenses) {
+      if (expense.date.isAfter(startDate.subtract(const Duration(days: 1))) && expense.date.isBefore(endDate.add(const Duration(days: 1)))) {
+        categoryMap.update(expense.category, (value) => value + expense.value, ifAbsent: () => expense.value);
+        totalValue += expense.value;
+      }
+    }
+
+    // Calculating percentage for each category
+    List<ExpenseByCategory> sumExpenses = categoryMap.entries.map((entry) {
+      double percentage = (entry.value / totalValue) * 100;
+      return ExpenseByCategory(category: entry.key, value: entry.value, percentage: percentage);
+    }).toList();
+
+    return sumExpenses;
+  }
+
+  List<Expense> filterExpenses() {
+    return listExpenses.where((expense) {
+      final bool withinDateRange = expense.date.isAfter(startDateTable.subtract(const Duration(days: 1))) && expense.date.isBefore(endDateTable.add(const Duration(days: 1)));
+      final bool matchesCategory = categoryController.text == '' || expense.category == categoryController.text;
+      final bool matchesDescription = descriptionController.text == '' || expense.description == descriptionController.text;
+      return withinDateRange && matchesCategory && matchesDescription;
+    }).toList();
+  }
 }
 
 class ExpenseByDay {
@@ -92,25 +136,4 @@ class ExpenseByCategory {
   double percentage;
 
   ExpenseByCategory({required this.category, this.value = 0, this.percentage = 0});
-}
-
-List<ExpenseByCategory> sumExpensesByCategory(List<Expense> expenses, DateTime startDate, DateTime endDate) {
-  Map<String, double> categoryMap = {};
-  double totalValue = 0;
-
-  // Calculating total value for each category
-  for (var expense in expenses) {
-    if (expense.date.isAfter(startDate.subtract(const Duration(days: 1))) && expense.date.isBefore(endDate.add(const Duration(days: 1)))) {
-      categoryMap.update(expense.category, (value) => value + expense.value, ifAbsent: () => expense.value);
-      totalValue += expense.value;
-    }
-  }
-
-  // Calculating percentage for each category
-  List<ExpenseByCategory> sumExpenses = categoryMap.entries.map((entry) {
-    double percentage = (entry.value / totalValue) * 100;
-    return ExpenseByCategory(category: entry.key, value: entry.value, percentage: percentage);
-  }).toList();
-
-  return sumExpenses;
 }

@@ -44,20 +44,24 @@ class _HomePageState extends State<HomePage> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.listExpenses.length,
-                  itemBuilder: (context, index) {
-                    final expense = controller.listExpenses[index];
-                    return ExpenseCard(
-                      expense: expense,
-                      onEdit: () {
-                        controller.showDialogExpenses(expense);
-                      },
-                    );
-                  },
-                );
+                if (controller.listExpenses.isNotEmpty) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.listExpenses.length,
+                    itemBuilder: (context, index) {
+                      final expense = controller.listExpenses[index];
+                      return ExpenseCard(
+                        expense: expense,
+                        onEdit: () {
+                          controller.showDialogExpenses(expense);
+                        },
+                      );
+                    },
+                  );
+                } else {
+                  return Container();
+                }
               },
             ),
           ],
