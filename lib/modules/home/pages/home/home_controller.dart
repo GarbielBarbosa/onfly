@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:onfly/shared/models/expenses.dart';
 import 'package:onfly/shared/dialogs/alert_dialog.dart';
@@ -19,9 +18,6 @@ class HomeController {
         expensesDialog = ExpensesDialog(context: context);
 
   List<Expense> listExpenses = [];
-  CollectionReference expenses = FirebaseFirestore.instance.collection('expenses');
-  Stream collectionStreamExpenses = FirebaseFirestore.instance.collection('expenses').snapshots();
-
   ValueNotifier<ViewState> state = ValueNotifier(ViewState.loading);
 
   showDialogExpenses(Expense? e) async {
