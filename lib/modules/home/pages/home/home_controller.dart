@@ -35,16 +35,18 @@ class HomeController {
 
   Future<void> addExpenses(Expense expense) async {
     try {
-      ExpenseService.addExpenses(expense);
+      await ExpenseService.addExpenses(expense);
     } catch (e) {
+      state.value = ViewState.error;
       print("Failed to add Expenses: $e");
     }
   }
 
   Future<void> updateExpenses(Expense expense) async {
     try {
-      ExpenseService.updateExpenses(expense);
+      await ExpenseService.updateExpenses(expense);
     } catch (e) {
+      state.value = ViewState.error;
       print("Failed to update Expenses: $e");
     }
   }

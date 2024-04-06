@@ -5,7 +5,6 @@ import 'package:onfly/modules/home/pages/reports/widgets/bar_char.dart';
 import 'package:onfly/modules/home/pages/reports/widgets/pie_chart.dart';
 import 'package:onfly/modules/home/pages/reports/widgets/table_report.dart';
 import 'package:onfly/shared/enuns.dart';
-import 'package:onfly/shared/utils/currency.dart';
 import 'package:onfly/shared/widgets/custom_app_bar.dart';
 import 'package:onfly/shared/widgets/custom_drawer.dart';
 import 'package:onfly/shared/widgets/custom_form_field.dart';

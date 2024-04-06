@@ -200,6 +200,7 @@ class ExpensesDialog {
           type: 'update',
           expense: Expense(
             id: expense.id,
+            userId: expense.userId,
             category: categoryController.text,
             description: descriptionController.text,
             value: NumberFormat('', 'pt_Br').parse(valueController.text).toDouble(),
@@ -211,6 +212,7 @@ class ExpensesDialog {
         return ReturnExpenseDialog(
           type: 'delete',
           expense: Expense(
+            userId: expense.userId,
             id: expense.id,
             category: categoryController.text,
             description: descriptionController.text,
