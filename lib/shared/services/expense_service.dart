@@ -65,7 +65,7 @@ class ExpenseService {
 
   static Stream<List<Expense>> getAllExpensesStream() {
     try {
-      return FirebaseFirestore.instance.collection('expenses').snapshots().map(
+      return FirebaseFirestore.instance.collection('expenses').orderBy('date', descending: true).snapshots().map(
             (querySnapshot) => querySnapshot.docs.map(
               (doc) {
                 Map<String, dynamic> data = doc.data();

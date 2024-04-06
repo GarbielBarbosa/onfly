@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ScaffoldWithNavBar extends StatefulWidget {
-  ScaffoldWithNavBar({super.key, required this.child});
+  const ScaffoldWithNavBar({
+    super.key,
+    required this.child,
+  });
 
   final Widget child;
 
@@ -21,10 +24,10 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
       initialLocation: '/HomePage',
     ),
     MyCustomBottomNavBarItem(
-      icon: Icon(Icons.explore_outlined),
-      activeIcon: Icon(Icons.explore),
-      label: 'DISCOVER',
-      initialLocation: '/discover',
+      icon: Icon(Icons.stacked_bar_chart),
+      activeIcon: Icon(Icons.stacked_bar_chart),
+      label: 'Relatórios',
+      initialLocation: '/Report',
     ),
     MyCustomBottomNavBarItem(
       icon: Icon(Icons.storefront_outlined),

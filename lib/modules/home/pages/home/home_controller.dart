@@ -61,7 +61,7 @@ class HomeController {
     ExpenseService.getAllExpensesStream().listen((List<Expense> expenses) {
       state.value = ViewState.loading;
       listExpenses = expenses;
-      state.value = ViewState.sucess;
+      state.value = ViewState.success;
     }, onError: (error) {
       state.value = ViewState.error;
     });

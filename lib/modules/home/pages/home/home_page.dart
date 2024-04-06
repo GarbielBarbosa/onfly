@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:onfly/modules/home/pages/home/home_controller.dart';
 import 'package:onfly/modules/home/pages/home/widgets/expense_card.dart';
 import 'package:onfly/shared/enuns.dart';
-import 'package:onfly/shared/utils/currency.dart';
 import 'package:onfly/shared/widgets/custom_app_bar.dart';
 import 'package:onfly/shared/widgets/custom_drawer.dart';
 

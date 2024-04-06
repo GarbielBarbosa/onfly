@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:onfly/modules/home/pages/home/home_page.dart';
+import 'package:onfly/modules/home/pages/reports/reports_page.dart';
 import 'package:onfly/shared/widgets/bottom_navigation_bar.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -27,13 +28,11 @@ final List<RouteBase> homeRoutes = <RouteBase>[
         },
       ),
       GoRoute(
-        path: '/discover',
+        path: '/Report',
         parentNavigatorKey: _shellNavigatorKey,
         pageBuilder: (context, state) {
           return const NoTransitionPage(
-            child: Scaffold(
-              body: Center(child: Text("Discover")),
-            ),
+            child: ReportsPage(),
           );
         },
       ),

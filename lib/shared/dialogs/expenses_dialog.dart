@@ -1,12 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:onfly/shared/models/expenses.dart';
-import 'package:onfly/shared/theme/colors.dart';
 import 'package:onfly/shared/utils/currency.dart';
 import 'package:onfly/shared/widgets/custom_form_field.dart';
 
@@ -49,153 +45,149 @@ class ExpensesDialog {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return StatefulBuilder(builder: (c, setState) {
-            return Container(
-              child: AlertDialog(
-                title: const Text('Nova despesa'),
-                content: Container(
-                  child: SingleChildScrollView(
-                    child: ListBody(
-                      children: [
-                        Form(
-                          key: formKey,
-                          child: Column(
-                            children: [
-                              CustomFormField(
-                                controller: categoryController,
-                                key: const Key('category'),
-                                textInputAction: TextInputAction.next,
-                                label: 'Categoria',
-                                hintText: 'Categoria',
-                                keyboardType: TextInputType.name,
-                                validator: (e) {
-                                  if (e == null || e.isEmpty) {
-                                    return 'Campo obrigatorio';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 10),
-                              CustomFormField(
-                                controller: descriptionController,
-                                key: const Key('description'),
-                                textInputAction: TextInputAction.next,
-                                label: 'Descrição',
-                                hintText: 'Descrição',
-                                validator: (e) {
-                                  if (e == null || e.isEmpty) {
-                                    return 'Campo obrigatorio';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              DropdownSearch<AllCurrencies>(
-                                popupProps: const PopupProps.menu(
-                                  showSearchBox: true,
-                                  searchDelay: Duration(seconds: 0),
-                                ),
-                                items: listCurrencies,
-                                dropdownDecoratorProps: const DropDownDecoratorProps(
-                                  dropdownSearchDecoration: InputDecoration(
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                                onChanged: (AllCurrencies? data) {
-                                  if (data != null) {
-                                    currentSelectedValue = data;
-                                  }
-                                },
-                                selectedItem: listCurrencies.first,
-                                itemAsString: (AllCurrencies currency) => currency.name,
-                              ),
-                              CustomFormField(
-                                controller: valueController,
-                                key: const Key('value'),
-                                keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
-                                label: 'Valor',
-                                hintText: 'Valor',
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp(r"[0-9,]")),
-                                ],
-                                textInputAction: TextInputAction.next,
-                                validator: (e) {
-                                  if (e == null || e.isEmpty) {
-                                    return 'Campo obrigatorio';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 10),
-                              CustomFormField(
-                                controller: dateController,
-                                label: 'Data da despesa',
-                                hintText: 'Data da despesa',
-                                validator: (e) {
-                                  if (e == null || e.isEmpty) {
-                                    return 'Campo obrigatorio';
-                                  }
-                                  return null;
-                                },
-                                onTap: () async {
-                                  DateTime? date = DateTime(1900);
-                                  FocusScope.of(context).requestFocus(FocusNode());
-                                  date = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1900),
-                                    lastDate: DateTime(2100),
-                                  );
-                                  if (date != null) {
-                                    this.date = date;
-                                  }
-                                  dateController.text = date != null ? DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_br').format(date) : '';
-                                },
-                              ),
-                            ],
+            return AlertDialog(
+              title: const Text('Nova despesa'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          CustomFormField(
+                            controller: categoryController,
+                            key: const Key('category'),
+                            textInputAction: TextInputAction.next,
+                            label: 'Categoria',
+                            hintText: 'Categoria',
+                            keyboardType: TextInputType.name,
+                            validator: (e) {
+                              if (e == null || e.isEmpty) {
+                                return 'Campo obrigatorio';
+                              }
+                              return null;
+                            },
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                actions: <Widget>[
-                  if (expense != null)
-                    TextButton(
-                      child: const Text(
-                        'Apagar',
-                        style: TextStyle(
-                          color: Colors.red,
-                        ),
+                          const SizedBox(height: 10),
+                          CustomFormField(
+                            controller: descriptionController,
+                            key: const Key('description'),
+                            textInputAction: TextInputAction.next,
+                            label: 'Descrição',
+                            hintText: 'Descrição',
+                            validator: (e) {
+                              if (e == null || e.isEmpty) {
+                                return 'Campo obrigatorio';
+                              }
+                              return null;
+                            },
+                          ),
+                          DropdownSearch<AllCurrencies>(
+                            popupProps: const PopupProps.menu(
+                              showSearchBox: true,
+                              searchDelay: Duration(seconds: 0),
+                            ),
+                            items: listCurrencies,
+                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                            ),
+                            onChanged: (AllCurrencies? data) {
+                              if (data != null) {
+                                currentSelectedValue = data;
+                              }
+                            },
+                            selectedItem: listCurrencies.first,
+                            itemAsString: (AllCurrencies currency) => currency.name,
+                          ),
+                          CustomFormField(
+                            controller: valueController,
+                            key: const Key('value'),
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
+                            label: 'Valor',
+                            hintText: 'Valor',
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp(r"[0-9,]")),
+                            ],
+                            textInputAction: TextInputAction.next,
+                            validator: (e) {
+                              if (e == null || e.isEmpty) {
+                                return 'Campo obrigatorio';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          CustomFormField(
+                            controller: dateController,
+                            label: 'Data da despesa',
+                            hintText: 'Data da despesa',
+                            validator: (e) {
+                              if (e == null || e.isEmpty) {
+                                return 'Campo obrigatorio';
+                              }
+                              return null;
+                            },
+                            onTap: () async {
+                              DateTime? date = DateTime(1900);
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              date = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1900),
+                                lastDate: DateTime(2100),
+                              );
+                              if (date != null) {
+                                this.date = date;
+                              }
+                              dateController.text = date != null ? DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_br').format(date) : '';
+                            },
+                          ),
+                        ],
                       ),
-                      onPressed: () {
-                        onDelete = true;
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                if (expense != null)
+                  TextButton(
+                    child: const Text(
+                      'Apagar',
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    ),
+                    onPressed: () {
+                      onDelete = true;
+                      isDialogOpen = false;
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                if (expense != null)
+                  TextButton(
+                    child: const Text('Atualizar'),
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        onDone = true;
                         isDialogOpen = false;
                         Navigator.of(context).pop();
-                      },
-                    ),
-                  if (expense != null)
-                    TextButton(
-                      child: const Text('Atualizar'),
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          onDone = true;
-                          isDialogOpen = false;
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    ),
-                  if (expense == null)
-                    TextButton(
-                      child: const Text('Add'),
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          onCreate = true;
-                          isDialogOpen = false;
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    ),
-                ],
-              ),
+                      }
+                    },
+                  ),
+                if (expense == null)
+                  TextButton(
+                    child: const Text('Add'),
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        onCreate = true;
+                        isDialogOpen = false;
+                        Navigator.of(context).pop();
+                      }
+                    },
+                  ),
+              ],
             );
           });
         },
