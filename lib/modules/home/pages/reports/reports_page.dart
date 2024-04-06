@@ -49,7 +49,7 @@ class _ReportsPageState extends State<ReportsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Grafico semanal',
+                        'Gráfico semanal',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontSize: 24,
@@ -99,7 +99,84 @@ class _ReportsPageState extends State<ReportsPage> {
                       BarChartSample1(
                         listExpenseByDay: controller.listExpenseByDay,
                       ),
-                      PieChartSample2(),
+                      const Text(
+                        'Gráfico Categoria',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Form(
+                        key: controller.formKeyPie,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(
+                              child: CustomFormField(
+                                controller: controller.dateControllerPie,
+                                label: 'Data inicial',
+                                hintText: 'Data inicial',
+                                validator: (e) {
+                                  if (e == null || e.isEmpty) {
+                                    return 'Campo obrigatorio';
+                                  }
+                                  return null;
+                                },
+                                onTap: () async {
+                                  DateTime? date = DateTime(1900);
+                                  FocusScope.of(context).requestFocus(FocusNode());
+                                  date = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime(2100),
+                                  );
+                                  if (date != null) {
+                                    controller.startDatePie = date;
+                                  }
+                                  controller.dateControllerPie.text = DateFormat('dd/MM/yyyy', 'pt_BR').format(controller.startDatePie);
+                                  controller.listenToExpensesStream();
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: CustomFormField(
+                                controller: controller.endDateControllerPie,
+                                label: 'Data Final',
+                                hintText: 'Data Final',
+                                validator: (e) {
+                                  if (e == null || e.isEmpty) {
+                                    return 'Campo obrigatorio';
+                                  }
+                                  return null;
+                                },
+                                onTap: () async {
+                                  DateTime? date = DateTime(1900);
+                                  FocusScope.of(context).requestFocus(FocusNode());
+                                  date = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime(2100),
+                                  );
+                                  if (date != null) {
+                                    controller.endDatePie = date;
+                                  }
+                                  controller.endDateControllerPie.text = DateFormat('dd/MM/yyyy', 'pt_BR').format(controller.endDatePie);
+                                  controller.listenToExpensesStream();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      PieChartCategory(
+                        expenseByCategory: controller.expenseByCategory,
+                      ),
                     ],
                   ),
                 );
