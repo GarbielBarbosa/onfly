@@ -38,6 +38,9 @@ class MyApp extends StatelessWidget {
               ).copyWith(
                 primary: DefaultColors().primary,
               ),
+              appBarTheme: AppBarTheme(
+                titleTextStyle: TextStyle(color: DefaultColors().primary, fontWeight: FontWeight.w600, fontSize: 20),
+              ),
             ),
           );
         } else {

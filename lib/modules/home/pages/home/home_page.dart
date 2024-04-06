@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:onfly/modules/home/pages/home/home_controller.dart';
 import 'package:onfly/shared/enuns.dart';
 import 'package:onfly/shared/utils/currency.dart';
+import 'package:onfly/shared/widgets/custom_app_bar.dart';
 import 'package:onfly/shared/widgets/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const CustomDrawer(),
-      appBar: AppBar(title: const Text('Despesas')),
+      appBar: CustomAppBar(title: 'Despesas'),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           controller.showDialogExpenses(null);

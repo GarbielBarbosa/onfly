@@ -42,6 +42,7 @@ dependencies:
   cloud_firestore: ^4.16.0
   dropdown_search: ^5.0.6
   flutter_keyboard_visibility: ^6.0.0
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
   assets:
     - assets/static_images/plane.jpeg
     - assets/static_images/onfly-logo.webp
+    - assets/svg.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
